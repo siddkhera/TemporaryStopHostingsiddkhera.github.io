@@ -30,7 +30,7 @@ This post is to show Markdown syntax rendering on [**Chirpy**](https://github.co
 
 ## Paragraph
 
-I wandered lonely as a cloud
+I wandered lonely
 
 That floats on high o'er vales and hills,
 
