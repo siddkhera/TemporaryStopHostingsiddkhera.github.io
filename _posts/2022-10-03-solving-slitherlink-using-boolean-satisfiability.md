@@ -2,7 +2,7 @@
 title: Solving Slitherlink Using Boolean Satisifiability
 date: 2022-10-03 00:00:00 +0530
 categories: [Propositional Logic, Python, SAT/SMT Solving]
-tags: [boolean satisfiability]     # TAG names should always be lowercase
+tags: [boolean satisfiability]
 toc: true
 math: true
 ---
@@ -15,3 +15,4 @@ I had made a video some time ago explaining Slitherlink. Unfortunately I was hal
 
 ## What is Boolean Satisifiability
 
+Boolean Satisifiability is the 
