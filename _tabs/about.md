@@ -7,7 +7,7 @@ order: 4
 
 ### Who is the author of this blog?
 
-The original name for this blog was going to simbakhera.com but since GoDaddy conveniently purchased the domain just a few weeks after I searched for it, I had to settle for a '.xyz'. The person writing this blog is Siddhanth Khera. Most people call me Khera, but if you find it hard to pronounce the voiceless velar fricative 'x' (j in járdin or ch in acht) feel free to call me Sidd.
+The person writing this blog is Siddhanth Khera. Most people call me Khera, but if you find it hard to pronounce the voiceless velar fricative 'x' (j in járdin or ch in acht) feel free to call me Sidd.
 
 I am a student from The Shri Ram School, Aravali in grade 12 (=HS Senior) and will be graduating in the May of 2023.
 
