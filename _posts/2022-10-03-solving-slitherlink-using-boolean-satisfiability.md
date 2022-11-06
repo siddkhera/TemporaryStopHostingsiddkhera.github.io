@@ -9,10 +9,6 @@ math: true
 
 ## What is Slitherlink?
 
-I had made a video some time ago explaining Slitherlink. Unfortunately I was half asleep when I recorded this as my voice would reveal. There are multiple places to learn about Slitherlink, therefore I'm not explaining it in detail here.
+Slitherlink is a Japanese Puzzle Game I love. I'd made a video explaining it a year ago, you can check it out if you don't know about the game. (I apologise for my voice in advance, I was half asleep)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EMuvNXjdWEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-## What is Boolean Satisifiability
-
-Boolean Satisifiability is the 

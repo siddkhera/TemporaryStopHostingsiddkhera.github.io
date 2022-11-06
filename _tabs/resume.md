@@ -1,9 +1,11 @@
 ---
 # the default layout is 'page'
-icon: fas fa-solid fa-id-card
+icon: fas fa-user
 order: 5
 
 ---
+
+# Resume/CV
 
 ### Awards, Honors
 
