@@ -11,7 +11,7 @@ The person writing this blog is Siddhanth Khera a Grade 12 (= HS Senior) student
 
 I'm trapped in the cycle of deleting and redownloading social media. I've made 5 instagram accounts, and deleted 4. As for the app, the number of times I've deleted and redownloaded it probably touch triple digits. The problem lies in the inherent design of these micro-blogging sites like Twitter, Facebook and Instagram. Ever since attention has become monetizable, there is a constant race to garner more of it which has led to the content becoming more conscise and less informed. These 'micro'-blogging sites are becoming 'nano'-blogging sites and removing incentives to create well thought out posts.
 
-This blog is a place for me to document my interests and opinions.
+This blog is a way for me to escape from the toxic social media platforms where people are judged not by the 'content' of their content but by how many thumbs they have moved. It is a place for me to document my interests and opinions as well as capture snapshots of my life.
 
 Upon reading my posts, if there is any topic that you think I would be even remotely fascinated by, feel free to shoot me a [mail](mailto:siddhanthkhera28@gmail.com).
 
