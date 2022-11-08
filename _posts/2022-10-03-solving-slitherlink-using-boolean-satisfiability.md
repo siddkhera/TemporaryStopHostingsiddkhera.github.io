@@ -20,7 +20,9 @@ A few years ago I had bought a book[^Puzzle Ninja] filled with Japanese Puzzles.
 
 Coming to September of 2021, while Solving Slitherlink Puzzles, I had the urge to make a solver for it.
 
-![]
+![JinenSS](JinenSS.png){style="max-width: 200px" .left}
+
+Let's see if this works?
 
 
 
