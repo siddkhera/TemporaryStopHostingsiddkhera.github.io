@@ -1,5 +1,5 @@
 ---
-title: Solving Slitherlink Using Boolean Satisifiability
+title: Solving Slitherlink Using Boolean Satisifiability Part 1
 date: 2022-10-03 00:00:00 +0530
 categories: [SAT/SMT Solver, Slitherlink]
 tags: [boolean satisfiability, propositional logic, SMT/SAT Solvers, slitherlink]
@@ -137,13 +137,25 @@ At the end if there remain lines on the grid marked as neither Absent nor Presen
 
 ## P vs NP and NP Completeness
 
+>If you're getting confused, [forget about it](https://www.youtube.com/watch?v=pS6zJ7IsJkM)
+>
+>{: .prompt-danger}
+
 I tried consicely explaining P vs NP. I'll perhaps make another post explaining the intricacies of P vs NP.
 
-What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq$$
+What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq NP$$
+
+P problems are those which are both easy to check and solve. NP problems are easy to check and hard to solve. NP complete problems are problems in NP such that they can simulate every problem in NP. Or that every problem in NP can be represented as/reduced to an NP complete problem.
+
+For those familiar with Big O notation, P problems are solvable in polynomial time by a deterministic Turing Machine $$O(n^c)$$ for a constant $c$ whereas problems in NP take exponentially longer to solve as the numbe of variables gets larger $$O(x^n)$$. I'm skipping over a lot of important nuances, for which I will make a new post.
 
 [Simplest video explaining P vs NP I could find ](https://www.youtube.com/watch?v=YX40hbAHx3s)
 
 [ A Video by Proffesor Moshe Vardi explaining P vs NP in more detail ](https://www.youtube.com/watch?v=7jZ2yha4nH8)
+
+## Boolean Satisfiability
+
+I decided not to directly use backtracking and instead use a SAT Solver. (Even the SAT Solver uses )
 
 ## Footnotes and Bibliography
 
