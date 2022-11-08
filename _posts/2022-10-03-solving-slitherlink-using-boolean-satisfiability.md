@@ -1,5 +1,5 @@
 ---
-title: Solving Slitherlink Using Boolean Satisifiability Part 1
+title: Solving Slitherlink Using Boolean Satisifiability
 date: 2022-10-03 00:00:00 +0530
 categories: [SAT/SMT Solver, Slitherlink]
 tags: [boolean satisfiability, propositional logic, SMT/SAT Solvers, slitherlink]
@@ -160,6 +160,26 @@ I decided not to directly use backtracking and instead use a SAT Solver. (Even t
 Boolean Satisfiability is an example of this really hard NP complete problem such that other hard problems like Slitherlink can be converted to it. Slitherlink was also proven to be NP Complete[^PROOF].
 
 SAT Solvers are ridiculously fast at solving these hard problems because humans have optimised them to a great degree. I convert the problem of Slitherlink into a problem of Boolean Satisfiability 
+
+> Well what is Boolean Satisfiability
+
+Boolean Satisfiability or SAT is the first problem to have been proven to be NP Complete. Boolean Satisfiability is tells us whether a Boolean Formula is satisfiable or not. I don't have the patience to explain what Boolean Formulas are so I will give an example of boolean Formula in CNF as required by the SAT Solver.
+
+Let A represent that I'm hungry, this statement can either be true or false
+
+Let B represent that I'm sad, this statement can either be true of false as well
+
+All these need to be true
+
+(I'm hungry or I'm sad) and (I'm hungry or I'm not sad) and (I'm not hungry or I'm sad)
+
+The SAT Solver will tell me that this statement can be satisfied if I'm both hungry and sad
+
+This statement can be represented as
+
+$$(A\lor B)\land (A\lor \neg B) \land (\neg A\lor B)$$
+
+Where $$\lor \land and \neg$$ represent or and and not respectively.
 
 ## Footnotes and Bibliography
 
