@@ -42,7 +42,7 @@ I would like to thank Jinen for motivating me to complete this project and would
 
 ## El Código
 
-Before I start explaining my project, here is the code. It's also on my [GitHub](www.github.com/siddkhera) !
+Before I start explaining my project, here is the code. It's also on my [GitHub](https://github.com/siddkhera) !
 
 I apologise if the code is succint to the point where it's ugly. I had a goal of writing an effecient solver that could be printed out in less than one page(from the emacs buffer). Alka Ma'am and Jinen would be able to attest that code this ugly could only have been written by me.
 
