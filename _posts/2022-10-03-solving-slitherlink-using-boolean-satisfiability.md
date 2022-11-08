@@ -179,7 +179,7 @@ This statement can be represented as
 
 $$(A\lor B)\land (A\lor \neg B) \land (\neg A\lor B)$$
 
-Where $$\lor \land and \neg$$ represent or and and not respectively.
+Where $$\lor ,\land ,\neg$$ represent or, and, not respectively.
 
 ## Footnotes and Bibliography
 
