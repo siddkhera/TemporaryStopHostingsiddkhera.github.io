@@ -42,7 +42,7 @@ I would like to thank Jinen for motivating me to complete this project and would
 
 ## El Código
 
-Before I start explaining my project, here is the code. It's also on my [GitHub](github.com/siddkhera) !
+Before I start explaining my project, here is the code. It's also on my [GitHub](www.github.com/siddkhera) !
 
 I apologise if the code is succint to the point where it's ugly. I had a goal of writing an effecient solver that could be printed out in less than one page(from the emacs buffer). Alka Ma'am and Jinen would be able to attest that code this ugly could only have been written by me.
 
@@ -108,3 +108,43 @@ for sol in pycosat.itersolve(cnf):
         print(sol)
 ```
 
+## Backtracking and Soduku Solvers
+
+Many people have created solvers for the (more) popular Japanese Puzzle - Sudoku. Almost all of these solvers use a method known as backtracking, like the one on this [video](https://www.youtube.com/watch?v=G_UYXzGuqvM). If I had used a similar backtracking uproach on Slitherlink, the puzzles would have taken extremely long. (Technically I still used it but through the DPLL algorithm that was implemented in the SAT Solver)
+
+To put it simply, backtracking is simply making guesses and going back and changing the guess if it doesn't work. 
+
+We iterate through all the possible guesses until we find one that works.
+
+```
+Initialise grid with all lines neither present not absent
+Optimise and apply concrete rules shown in video?
+
+function Check(Position, Absent or Present)
+  return true if guess is valid
+ 
+function Solve()
+  iterate through the lines in the grid marked as neither Absent or Present
+  	for x in Present, Absent
+	  	if Check(Postion, Line x)
+  			Mark Line on this grid as x
+  			Solve()
+  			Mark Line on grid as neither Present of Absent
+  	terminate this instance of the function
+```
+
+At the end if there remain lines on the grid marked as neither Absent nor Present, the puzzle is not solvable. Initially the Slitherlink Solver was going to look like this but I decided  against since this method is extremely slow and gets exponentially slower as the puzzle gets bigger. Even if I had added optmisations to this puzzle by trying to apply the rules I have mentioned in the video above, it would still have been terribly inefficient. Luckily I found another method, one that involves Boolean Satisfiability.
+
+## P vs NP and NP Completeness
+
+I tried consicely explaining P vs NP. I'll perhaps make another post explaining the intricacies of P vs NP.
+
+What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq$$
+
+[Simplest video explaining P vs NP I could find ](https://www.youtube.com/watch?v=YX40hbAHx3s)
+
+[ A Video by Proffesor Moshe Vardi explaining P vs NP in more detail ](https://www.youtube.com/watch?v=7jZ2yha4nH8)
+
+## Footnotes and Bibliography
+
+[^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
