@@ -24,7 +24,7 @@ A few years ago I had bought a book[^Puzzle Ninja] filled with Japanese Puzzles.
 
 Coming to September of 2021, while Solving Slitherlink Puzzles, I had the urge to make a solver for it. When I asked [Jinen](https://jinensetpal.github.io/) for help with it.
 
-![JinenSS](JinenSS.png)
+![JinenSS](https://raw.githubusercontent.com/siddkhera/images/main/JinenSS.png)
 
 This project took a long time to complete and while others exaggerate the hours activities took on their CommonApp, I may have understated this one out of sheer embarassment at how long it took. Arguably I didn't spend much time on it at a go since something or the other always came up. Most of the time spent on this project was spent going on tangents as I learned new things while coming up with a way to approach this project. It would take too long to list what all I learned through this project so I shall skip it for now. 
 
@@ -34,7 +34,7 @@ Finally in June of 2022 after my internships ended and I got COVID, I decided to
 
 Unfortunately, since school had restarted and COVID had trained all my energy I sat down to complete the project again finished it in July.
 
-![JinenSS](JinenS2.png)
+![JinenSS](https://raw.githubusercontent.com/siddkhera/images/main/JinenS2.png)
 
 This project took wayyy longer than it should have but the lessons learned and the skills acquired make it worth it. Working on my own, this project taught me how to teach myself new concepts and how to apply them.
 
