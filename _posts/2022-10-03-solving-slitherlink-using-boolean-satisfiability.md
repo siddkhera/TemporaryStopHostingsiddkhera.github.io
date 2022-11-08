@@ -163,7 +163,7 @@ SAT Solvers are ridiculously fast at solving these hard problems because humans 
 
 > Well what is Boolean Satisfiability
 
-Boolean Satisfiability or SAT is the first problem to have been proven to be NP Complete. Boolean Satisfiability is tells us whether a Boolean Formula is satisfiable or not. I don't have the patience to explain what Boolean Formulas are so I will give an example of boolean Formula in CNF as required by the SAT Solver.
+Boolean Satisfiability or SAT is the first problem to have been proven to be NP Complete. Boolean Satisfiability is tells us whether a Boolean Formula is satisfiable or not. I don't have the patience to explain what Boolean Formulas are so I will give an example of Boolean Formula in CNF as required by the SAT Solver.
 
 Let A represent that I'm hungry, this statement can either be true or false
 
@@ -180,6 +180,42 @@ This statement can be represented as
 $$(A\lor B)\land (A\lor \neg B) \land (\neg A\lor B)$$
 
 Where $$\lor ,\land ,\neg$$ represent or, and, not respectively.
+
+
+
+$$(A\lor B)\land (A\lor \neg B) \land (\neg A\lor B) \land (\neg A\lor \neg B)$$
+
+The SAT Solver will tell us that this statement is UNSAT(Unsatisfiable)
+
+If A is true and B is true then $$(\neg A\lor \neg B)$$ is false
+
+If A is true and B is false then $$(\neg A\lor B)$$ is false
+
+If A is false and B is true then $$( A\lor \neg B)$$ is false
+
+If A is false and B is false then $$(A\lor B)$$ is false
+
+This statement cannot ever be true, therefore it is unsatisfiable.
+
+Now that I've explained the basics of what is needed to understand the code, I can start explaining the code
+
+## Defining the Puzzle
+
+   We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$ $and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$
+    is represented as 1.
+
+Generally, we can represent the horizontal line $$h_{x,y}$$ as $$(x \times (cols))+(y+1)$$, the last horizontal line at $h_{rows,cols-1}$ will be the $(rows+1) \times cols$ this is rather obvious, but can help us verify the formula. We can put in $x=rows$ and $y=cols-1$, we get $$(rows \times (cols))+(cols-1+1)=rows \times cols + cols = (rows+1) \times cols$$
+
+The vertical lines start from after the horizontal lines, therefore the first vertical line, $$v_{0,0}$$ is given the id $$(rows+1) \times cols + 1$$. Let's forget about the fact that the ids for vertical lines start after horizontal lines, and simply give the vertical lines ids with $$v_{0,0}$ as 1,  $v_{0,1}$$ as 2 and so on, uptil the last vertical line at $v_{rows-1,cols}$ which will get the value of $$rows \times (cols+1)$$. We can use a modification of the formula used for horizontal lines. $$v_{x,y}=x \times (cols+1) +y+1$$.
+
+We can simply add the number of horizontal lines to this formula to give us a unique id for every line, since the ids for vertical lines start after horizontal lines. Therefore the id for vertical lines can be given by
+
+$$ v_{x,y} = (rows+1) \times cols + x \times (cols + 1) + y + 1 = cols\times (rows + x + 1) + x + y + 1 $$
+
+
+As mentioned before, we can get the id of horizontal lines with
+
+$$ h_{x,y} = x \times cols + y + 1$$
 
 ## Footnotes and Bibliography
 
