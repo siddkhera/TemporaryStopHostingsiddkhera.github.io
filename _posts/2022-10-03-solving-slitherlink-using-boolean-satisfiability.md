@@ -155,8 +155,13 @@ For those familiar with Big O notation, P problems are solvable in polynomial ti
 
 ## Boolean Satisfiability
 
-I decided not to directly use backtracking and instead use a SAT Solver. (Even the SAT Solver uses )
+I decided not to directly use backtracking and instead use a SAT Solver. (Even the SAT Solver uses backtracking).
+
+Boolean Satisfiability is an example of this really hard NP complete problem such that other hard problems like Slitherlink can be converted to it. Slitherlink was also proven to be NP Complete[^PROOF].
+
+SAT Solvers are ridiculously fast at solving these hard problems because humans have optimised them to a great degree. I convert the problem of Slitherlink into a problem of Boolean Satisfiability 
 
 ## Footnotes and Bibliography
 
 [^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
+[^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
