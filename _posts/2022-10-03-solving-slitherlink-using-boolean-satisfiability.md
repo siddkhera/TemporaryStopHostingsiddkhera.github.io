@@ -5,6 +5,7 @@ categories: [SAT/SMT Solver, Slitherlink]
 tags: [boolean satisfiability, propositional logic, SMT/SAT Solvers, slitherlink]
 toc: true
 math: true
+pin: true
 ---
 
 ## What is Slitherlink?
@@ -15,7 +16,9 @@ Slitherlink is a Japanese Puzzle Game I love. I'd made a video explaining it a y
 
 
 
-During the summer holidays, while solving Sitherlink puzzles on <https://www.puzzle-loop.com/>, I suddently had the urge to make a Slitherlink Solver. I'd seen many people make Soduku solvers, 
+All the way back in September of 2021, while solving Sitherlink puzzles on <https://www.puzzle-loop.com/>, I suddently had the urge to make a Slitherlink Solver. I'd seen many people make Soduku solvers, but they had all used backtracking. (backtracking=make a guess if it's wrong then go back) Using only backtracking would have resulted in an extremely slow Slitherlink Solver, so I decided to solve the Puzzle like a human would by optimising first. First I would have applied the rules that I have shown in the video and then would have used backtracking to see which solutions are valid and which are not. This would have made an incredibly slow solver too, significantly faster than the first approach but **significantly** slower than the approach I ended up taking.
+
+On my journey of creating this solver, I learned more than I had expected. Taking a small tangent from every new topic that I discovered I spent significantly more time learning about this project than I did implementing what I had learned. Simply making the solver should have taken at max 2 days but I ended up taking nearly a month. On the plus side, my newly acquired knowledge will help me 
 
 ```python
 import pycosat
@@ -78,4 +81,3 @@ for sol in pycosat.itersolve(cnf):
     if LoopsRemaining==[]:
         print(sol)
 ```
-
