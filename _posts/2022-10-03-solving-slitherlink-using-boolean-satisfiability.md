@@ -139,7 +139,7 @@ At the end if there remain lines on the grid marked as neither Absent nor Presen
 
 I tried consicely explaining P vs NP. I'll perhaps make another post explaining the intricacies of P vs NP.
 
-What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq NP$$
+What I'm going to explain will skip over a lot of intricacies of the definition such as
 
 [Simplest video explaining P vs NP I could find ](https://www.youtube.com/watch?v=YX40hbAHx3s)
 
