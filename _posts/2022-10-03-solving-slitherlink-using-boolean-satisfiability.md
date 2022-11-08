@@ -14,11 +14,21 @@ Slitherlink is a Japanese Puzzle Game I love. I'd made a video explaining it a y
 
 <iframe src="https://www.youtube.com/embed/EMuvNXjdWEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## Why this Project Means so Much to me
+
+A few years ago I had bought a book[^Puzzle Ninja] filled with Japanese Puzzles. The first Puzzle introduced in the book and arguably my favourite - alongside KenKen - was Slitherlink.
+
+Coming to September of 2021, while Solving Slitherlink Puzzles, I had the urge to make a solver for it.
+
+![]
 
 
-All the way back in September of 2021, while solving Sitherlink puzzles on <https://www.puzzle-loop.com/>, I suddently had the urge to make a Slitherlink Solver. I'd seen many people make Soduku solvers, but they had all used backtracking. (backtracking=make a guess if it's wrong then go back) Using only backtracking would have resulted in an extremely slow Slitherlink Solver, so I decided to solve the Puzzle like a human would by optimising first. First I would have applied the rules that I have shown in the video and then would have used backtracking to see which solutions are valid and which are not. This would have made an incredibly slow solver too, significantly faster than the first approach but **significantly** slower than the approach I ended up taking.
 
-On my journey of creating this solver, I learned more than I had expected. Taking a small tangent from every new topic that I discovered I spent significantly more time learning about this project than I did implementing what I had learned. Simply making the solver should have taken at max 2 days but I ended up taking nearly a month. On the plus side, my newly acquired knowledge will help me 
+## El Código
+
+Before I start explaining my project, here is the code. It's also on my GitHub[^Github] !
+
+I apologise if the code is succint to the point where it's ugly. My computer's teacher, Alka Ma'am or Jinen would be able to attest that code this ugly has to have been written by me
 
 ```python
 import pycosat
@@ -81,3 +91,8 @@ for sol in pycosat.itersolve(cnf):
     if LoopsRemaining==[]:
         print(sol)
 ```
+
+## Footnotes and Bibliography
+
+[^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
+[^Github]: www.github.com/siddkhera
