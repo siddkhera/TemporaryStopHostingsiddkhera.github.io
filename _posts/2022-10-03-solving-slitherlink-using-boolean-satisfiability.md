@@ -137,8 +137,8 @@ At the end if there remain lines on the grid marked as neither Absent nor Presen
 
 ## P vs NP and NP Completeness
 
->If you're getting confused, [forget about it](https://www.youtube.com/watch?v=pS6zJ7IsJkM)
->{: .prompt-danger}
+> An example showing the `danger` type prompt.
+> {: .prompt-danger }
 
 I tried consicely explaining P vs NP. I'll perhaps make another post explaining the intricacies of P vs NP.
 
