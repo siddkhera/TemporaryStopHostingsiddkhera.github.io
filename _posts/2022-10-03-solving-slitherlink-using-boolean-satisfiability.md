@@ -133,17 +133,16 @@ function Solve()
   	terminate this instance of the function
 ```
 
-At the end if there remain lines on the grid marked as neither Absent nor Present, the puzzle is not solvable. Initially the Slitherlink Solver was going to look like this but I decided  against since this method is extremely slow and gets exponentially slower as the puzzle gets bigger. Even if I had added optmisations to this puzzle by trying to apply the rules I have mentioned in the video above, it would still have been terribly inefficient. Luckily I found another method, one that involves Boolean Satisfiability.
+At the end if there remain lines on the grid marked as neither Absent nor Present, the puzzle is not solvable. Initially the Slitherlink Solver was going to look like this but I decided  against since this method is extremely slow and gets exponentially slower as the puzzle gets bigger. Even if I had added optmisations to this puzzle by trying to apply the rules I have mentioned in the video above, it would still have been terribly inefficient. Luckily I found another method, one that involves Boolean Satisfiability. (Two research papers that helped me greatly 1[^paper1] and 2[^paper2]) The second one 
 
 ## P vs NP and NP Completeness
 
 >If you're getting confused, [forget about it](https://www.youtube.com/watch?v=pS6zJ7IsJkM)
->
 >{: .prompt-danger}
 
 I tried consicely explaining P vs NP. I'll perhaps make another post explaining the intricacies of P vs NP.
 
-What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq NP$$
+What I'm going to explain will skip over a lot of intricacies of the definition such as $$P\subseteq NP$$ or that we don't know if $$P=NP$$
 
 P problems are those which are both easy to check and solve. NP problems are easy to check and hard to solve. NP complete problems are problems in NP such that they can simulate every problem in NP. Or that every problem in NP can be represented as/reduced to an NP complete problem.
 
@@ -161,7 +160,7 @@ Boolean Satisfiability is an example of this really hard NP complete problem suc
 
 SAT Solvers are ridiculously fast at solving these hard problems because humans have optimised them to a great degree. I convert the problem of Slitherlink into a problem of Boolean Satisfiability 
 
-> Well what is Boolean Satisfiability
+#### Well what is Boolean Satisfiability
 
 Boolean Satisfiability or SAT is the first problem to have been proven to be NP Complete. Boolean Satisfiability is tells us whether a Boolean Formula is satisfiable or not. I don't have the patience to explain what Boolean Formulas are so I will give an example of Boolean Formula in CNF as required by the SAT Solver.
 
@@ -171,7 +170,7 @@ Let B represent that I'm sad, this statement can either be true of false as well
 
 All these need to be true
 
-(I'm hungry or I'm sad) and (I'm hungry or I'm not sad) and (I'm not hungry or I'm sad)
+**(I'm hungry or I'm sad) and (I'm hungry or I'm not sad) and (I'm not hungry or I'm sad)**
 
 The SAT Solver will tell me that this statement can be satisfied if I'm both hungry and sad
 
@@ -201,11 +200,21 @@ Now that I've explained the basics of what is needed to understand the code, I c
 
 ## Defining the Puzzle
 
-   We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1.
+```python
+rows=len(squares) #No. of Rows
+cols=len(squares[0]) #No. of Coloumns
+
+def LineID(x,y,horizontal):
+    return ((0<=x<=rows and 0<=y<cols) and ((x*cols)+y+1)) if horizontal else ((0<=x<rows and 0<=y<=cols) and cols*(rows+x+1)+x+y+1)
+```
+
+`squares` is a grid that represents the positions of all the numbers written on the puzzle.
+
+We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1. Above we have used A and B to represent variables that give true or false, here we are using numbers. If 1 is true that means that the first horizontal line is drawn in the Slitherlink puzzle and so on.
 
 Generally, we can represent the horizontal line $$h_{x,y}$$ as $$(x \times (cols))+(y+1)$$, the last horizontal line at $h_{rows,cols-1}$ will be the $(rows+1) \times cols$ this is rather obvious, but can help us verify the formula. We can put in $x=rows$ and $y=cols-1$, we get $$(rows \times (cols))+(cols-1+1)=rows \times cols + cols = (rows+1) \times cols$$
 
-The vertical lines start from after the horizontal lines, therefore the first vertical line, $$v_{0,0}$$ is given the id $$(rows+1) \times cols + 1$$. Let's forget about the fact that the ids for vertical lines start after horizontal lines, and simply give the vertical lines ids with $$v_{0,0}$ as 1,  $v_{0,1}$$ as 2 and so on, uptil the last vertical line at $v_{rows-1,cols}$ which will get the value of $$rows \times (cols+1)$$. We can use a modification of the formula used for horizontal lines. $$v_{x,y}=x \times (cols+1) +y+1$$.
+The vertical lines start from after the horizontal lines, therefore the first vertical line, $$v_{0,0}$$ is given the id $$(rows+1) \times cols + 1$$. Let's forget about the fact that the ids for vertical lines start after horizontal lines, and simply give the vertical lines ids with $$v_{0,0}$$ as 1,  $$v_{0,1}$$ as 2 and so on, uptil the last vertical line at $$v_{rows-1,cols}$$ which will get the value of $$rows \times (cols+1)$$. We can use a modification of the formula used for horizontal lines. $$v_{x,y}=x \times (cols+1) +y+1$$.
 
 We can simply add the number of horizontal lines to this formula to give us a unique id for every line, since the ids for vertical lines start after horizontal lines. Therefore the id for vertical lines can be given by
 
@@ -216,7 +225,32 @@ As mentioned before, we can get the id of horizontal lines with
 
 $$ h_{x,y} = x \times cols + y + 1$$
 
+
+
+The `LineID()` function gives us the Line ID of a line if we're given its x and y coordinated 
+
+## Rules of Slitherlink
+
+There are 3 rules for Slitherlink as I've mentioned in the video above
+
+1. Single Loop
+2. Numbers around a Cell
+3. Loop never crosses itself
+
+We enfore Rules 2 and 3 in the CNF we give to the SAT solver and then iterate over all the given solutions to find one that follows Rule 1.
+
+## Lines around a Cell/Another Line
+
+```python
+def linesAround(x,y,horizontal,pre):
+    return list(filter((False).__ne__, ([LineID(x,y,False), LineID(x-1,y,False), LineID(x,y-1,True)] if pre else [LineID(x,y+1,False), LineID(x-1,y+1,False), LineID(x,y+1,True)]) if horizontal else ([LineID(x,y-1,True), LineID(x,y,True), LineID(x-1,y,False)] if pre else [LineID(x+1,y-1,True), LineID(x+1,y,True), LineID(x+1,y,False)])))
+```
+
+This 'line' of code gives the number of lines around a line. In order to make the code succinct, it has become difficult to understand, so I shall break it down.
+
 ## Footnotes and Bibliography
 
 [^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
 [^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
+[^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf#page=34&zoom=100,158,576
+[^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
