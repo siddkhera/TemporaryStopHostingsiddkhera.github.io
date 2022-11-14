@@ -334,7 +334,15 @@ I used python's itertools library to help me out which is [beatuifully written a
 I believe every novice python programmer needs to know about python's [itertools module](https://www.youtube.com/watch?v=p8FUoSIyIVY&t=282s). I will be using itertool's combinations function[^Combinations]. It gives us ways we can arrage p items in to r length lists or the ways we can choose r elements from list of p items. ([it gives the combinations not permutations](https://www.youtube.com/watch?v=0ZsSRx0o0zE))
 
 #### At Least N
-Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true.
+Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true no matter what. Therefore if we add all the ways of choosing any $$len-n+1$$ from the variables represented in the CNF form, it will be true if at least N variables are true.
+
+If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at least 1 true. We can represend it as
+
+$$(\alpha \lor \beta \lor \gamma \lor \delta)$$
+
+Similarly if we want at least two of those 4 variables to be true, we can write it as
+
+$$ (\alpha \lor \beta \lor \gamma) \land (\alpha \lor \beta \lor \delta) \land (\alpha \lor \gamma \lor \delta) \land (\beta \lor \gamma \lor \delta)$$
 
 
 ## Footnotes and Bibliography
