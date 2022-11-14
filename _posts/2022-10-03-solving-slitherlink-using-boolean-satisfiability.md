@@ -344,6 +344,9 @@ Similarly if we want at least two of those 4 variables to be true, we can write 
 
 $$ (\alpha \lor \beta \lor \gamma) \land (\alpha \lor \beta \lor \delta) \land (\alpha \lor \gamma \lor \delta) \land (\beta \lor \gamma \lor \delta)$$
 
+Similarily if we want at least 3 of those 4 variables to be true, we can write it as
+
+$$(\alpha \lor \beta)\land (\alpha \lor \gamma)\land (\alpha \lor \delta) \land (\beta \lor \gamma) \land (\beta \lor \delta) \land (\gamma \lor \delta)$$
 
 ## Footnotes and Bibliography
 
