@@ -274,11 +274,21 @@ There are 4 possibilities of lines around a line we need to find. The line can e
 
 For each of the 4 possibilites, the lines around the point can be represented as 
 
-1. Let the line be a Horizontal Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its anterior(left) point. They can be represented as 
+1. Let the line be a Horizontal Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its anterior (left) point. They can be represented as 
 
 $$ (\alpha ,\beta, Vertical),(\alpha -1,\beta, Vertical)\ and\ (\alpha, \beta -1, Horizontal)$$
 
+2. Let the line be a Horizontal Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its posterior (right) point. They can be represented as 
 
+$$ (\alpha ,\beta + 1, Vertical),(\alpha - 1,\beta + 1, Vertical)\ and\ (\alpha, \beta + 1, Horizontal)$$
+
+3. Let the line be a Vertical Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its anterior (left) point. They can be represented as 
+
+$$ (\alpha ,\beta - 1 , Horizontal),(\alpha,\beta, Horizontal)\ and\ (\alpha - 1, \beta, Vertical)$$
+
+4. Let the line be a Vertical Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its posterior (right) point. They can be represented as 
+
+$$ (\alpha + 1,\beta - 1, Horizontal),(\alpha + 1,\beta, Horizontal)\ and\ (\alpha + 1, \beta, Vertical)$$
 
 ## Footnotes and Bibliography
 
