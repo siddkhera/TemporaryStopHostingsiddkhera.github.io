@@ -311,9 +311,37 @@ For the square with coordinate $$\alpha ,\beta$$, we can represend the lines aro
 
 $$ (\alpha, \beta, Horizontal), (\alpha, \beta, Vertical), (\alpha + 1, \beta, Horizontal)\ and\ (\alpha, \beta + 1, Vertical)$$
 
+## Choose N
+
+```python
+def nTrue(vars,n):
+    return list(map(lambda x:list(x),list(combinations([-i for i in vars],n+1))))+list(map(lambda x:list(x),list(combinations(vars,len(vars)+1-n))))
+```
+
+This is just one line of code but it took me a lot of time and creativity to come up with this. Initially my plan was to make multiple functions for each of the cases I would have to deal with but that would be too cringe. 
+
+
+The Choose N function is a CNF representation that N and exactly N of the variables from the ones given need to be true. Making this function would have been easy if the constraint of CNF was not given. I sat down and wrote down various of these conditions and then manually converted them CNF form using Karnaugh-Maps[^KMAPS]. I thought this was to no avail, unsatisfied I decided to go sleep. Mid-sleep I came up with a better way to construct this function.
+
+For Exactly N variables to be true, we can say that at least N variables need to be true and at most N variables need to true.
+
+
+$$n\leq x \leq n \Leftrightarrow x=n$$
+$$(AtMostN)\land (AtLeastN) \equiv (N True)$$
+
+I used python's itertools library to help me out which is [beatuifully written and which I take inspiration from.](https://www.youtube.com/watch?v=jUM_Dpt6yu0)
+
+I believe every novice python programmer needs to know about python's [itertools module](https://www.youtube.com/watch?v=p8FUoSIyIVY&t=282s). I will be using itertool's combinations function[^Combinations]. It gives us ways we can arrage p items in to r length lists or the ways we can choose r elements from list of p items. ([it gives the combinations not permutations](https://www.youtube.com/watch?v=0ZsSRx0o0zE))
+
+#### At Least N
+Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true.
+
+
 ## Footnotes and Bibliography
 
 [^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
 [^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
 [^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf#page=34&zoom=100,158,576
 [^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
+[^KMAPS]: https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
+[^Combinations]: https://docs.python.org/3/library/itertools.html#itertools.combinations
