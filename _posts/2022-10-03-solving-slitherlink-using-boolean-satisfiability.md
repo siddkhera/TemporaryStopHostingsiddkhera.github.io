@@ -434,7 +434,7 @@ Using these two we can enforce Rule 3. If a line is present it implies that ther
 
 Let $$\alpha$$ be a line and $$(\zeta ,\theta ,\phi)$$ represend the lines connected to one of its points. At least of one $$(\zeta ,\theta ,\phi)$$ needs to be true represented in CNF, let this representation be $$\tau$$
 
-$$\alpha \implies \tau$ \equiv \neg \alpha \lor \tau$$
+$$\alpha \implies \tau \equiv \neg \alpha \lor \tau$$
 
 $$\tau \equiv (\neg \zeta \lor \neg \theta) \land (\neg \zeta \lor \neg \phi) \land (\neg \theta \lor \neg \phi) \land (\zeta \lor \theta \lor \phi)$$
 
