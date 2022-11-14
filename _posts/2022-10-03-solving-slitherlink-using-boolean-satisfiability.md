@@ -207,7 +207,7 @@ with open('slitherlink.csv', 'r') as read_obj:
 
 We take the slitherlink grid as a .csv file where the numbers on the grid represent the numbers on the slitherlink grid and ''.' used to represent blank squares. This grid is then represented as a 2D grid in python: `squares`.
 
-The lines around the squares are represented as 
+The lines around the squares are represented as showns below.
 
 ```python
 rows=len(squares) #No. of Rows
@@ -219,7 +219,6 @@ def LineID(x,y,horizontal):
 
 We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1. Above we have used A and B to represent variables that give true or false, here we are using numbers. If 1 is true that means that the first horizontal line is drawn in the Slitherlink puzzle and so on.
 
-![GridCood](SlitherCood.jpeg)
 ![GridCood](SlitherID.jpeg)
 
 Generally, we can represent the horizontal line $$h_{x,y}$$ as $$(x \times (cols))+(y+1)$$, the last horizontal line at $h_{rows,cols-1}$ will be the $(rows+1) \times cols$ this is rather obvious, but can help us verify the formula. We can put in $x=rows$ and $y=cols-1$, we get $$(rows \times (cols))+(cols-1+1)=rows \times cols + cols = (rows+1) \times cols$$
@@ -236,7 +235,10 @@ As mentioned before, we can get the id of horizontal lines with
 
 $$ h_{x,y} = x \times cols + y + 1$$
 
-The `LineID()` function gives us the Line ID of a line if we're given its x and y coordinated 
+The `LineID()` function gives us the Line ID of a line if we're given its x and y coordinates. If the x and y values are not within the suitable range, it returns a `False`. It only returns a true if the values given are within the suitable range.
+
+![GridCood](SlitherCood.jpeg)
+
 
 ## Rules of Slitherlink
 
@@ -259,7 +261,24 @@ def linesAround(x,y,horizontal,pre):
     return list(filter((False).__ne__, ([LineID(x,y,False), LineID(x-1,y,False), LineID(x,y-1,True)] if pre else [LineID(x,y+1,False), LineID(x-1,y+1,False), LineID(x,y+1,True)]) if horizontal else ([LineID(x,y-1,True), LineID(x,y,True), LineID(x-1,y,False)] if pre else [LineID(x+1,y-1,True), LineID(x+1,y,True), LineID(x+1,y,False)])))
 ```
 
+This is the longest line of code in the program and should have been broken into multiple if statements but I made it just one line to reduce the number of lines of code.
+
 This 'line' of code gives the number of lines around a line. In order to make the code succinct, it has become difficult to understand, so I shall break it down.
+
+Since the `LineID()` function gives us False in the event that a line does not exist in that position. `list(filter((False).__ne__, (l)` filters all the false values from the list l. We use this to filer all the values we get as `False`.
+
+There are 4 possibilities of lines around a line we need to find. The line can either be horizontal or vertical. Each line has two points, with different lines connected to each of them. `linesAround(x,y,horizontal,pre)` x and y represent the x and y coordinates; horizontal refers to whether or not the line is vertical or horizontal like the last function (True=Horizontal, False=Vertical); pre refers to the anterior point of the line (left point in horizontal lines and upper point in vertical lines).
+
+![Hori](LineALineH.png)
+![Verti](LineALineV.png)
+
+For each of the 4 possibilites, the lines around the point can be represented as 
+
+1. Let the line be a Horizontal Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its anterior(left) point. They can be represented as 
+
+$$ (\alpha ,\beta, Vertical),(\alpha -1,\beta, Vertical) and (\alpha, \beta -1, Horizontal)$$
+
+
 
 ## Footnotes and Bibliography
 
