@@ -334,7 +334,7 @@ I used python's itertools library to help me out which is [beatuifully written a
 I believe every novice python programmer needs to know about python's [itertools module](https://www.youtube.com/watch?v=p8FUoSIyIVY&t=282s). I will be using itertool's combinations function[^Combinations]. It gives us ways we can arrage p items in to r length lists or the ways we can choose r elements from list of p items. ([it gives the combinations not permutations](https://www.youtube.com/watch?v=0ZsSRx0o0zE))
 
 #### At Least N
-Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true no matter what. Therefore if we add all the ways of choosing any $$len-n+1$$ from the variables represented in the CNF form, it will be true if at least N variables are true.
+Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true no matter what. Therefore if we add all the ways of choosing any $$len-n+1$$ from the variables represented in the CNF form, the expression will be True if at least N variables are True.
 
 If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at least 1 true. We can represend it as
 
@@ -356,6 +356,40 @@ would be represented as
 
 $$[[\alpha , \beta ],[\alpha , \gamma ],[\alpha , \delta ] , [\beta , \gamma ] , [\beta , \delta ] , [\gamma , \delta ]]$$
 
+```python
+combinations(vars,len(vars)+1-n)
+```
+
+Gives us all the ways to choose vars-n+1 variables from all the variables. Ufortunately, this is an object which contains tuples which needs to be converted to a list. For that reason we need to convert it to a lists of a lists as:
+
+I learned about lamda operators when I friend Sarthak explained [$$\lambda$$ Calculus](https://en.wikipedia.org/wiki/Lambda_calculus) to me. You do not need to know about Lamda Calculus in order to understand the code, you can check out this resource[^lambda] that explains lamda maps in python.
+
+```python
+list(map(lambda x:list(x),list(combinations(vars,len(vars)+1-n))))
+```
+
+#### At Most N
+
+In some sense, at most N is the same as a at least N. If have figured out how to implement, at least N we can easily implement at most N.
+
+How? Well, if *at most* N variables are True then *at least* `len-N` must be false. Applying what we did before. Therefore if we choose one more than $$len-(len-n)=n$$ or $$n+1$$ variables, at least one of them must be false. To check that at leasy one of them false, we can apply negation (NOT) to the variables $$\neg \alpha$$ is True when $$\alpha$$ is False and False when $$\alpha$$ is true. We can find all the ways to choose n+1 variables and negate them so that the expression is True if at least $$len-N$$ variables are False or if at most N variables are True.
+
+If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at most 1 True (at least 3 False). We can represend it as
+
+$$(\neg \alpha \lor \neg \beta)\land (\neg \alpha \lor \neg \gamma)\land (\neg \alpha \lor \neg \delta) \land (\neg \beta \lor \neg \gamma) \land (\neg \beta \lor \neg \delta) \land (\neg \gamma \lor \neg \delta)$$
+
+From the 4 variables if we want at most 2 (at least 2 false) we can represent it as
+
+$$ (\neg \alpha \lor \neg \beta \lor \neg \gamma) \land (\neg \alpha \lor \neg \beta \lor \neg \delta) \land (\neg \alpha \lor \neg \gamma \lor \neg \delta) \land (\neg \beta \lor \neg \gamma \lor \neg \delta)$$
+
+and so on.
+
+This is similar to the code explained previously, the only difference is that I am negating all the variables by adding a negative sign in front of them. `[-i for i in vars]` creates a list where all the elements in vars become negative.
+
+```python
+list(map(lambda x:list(x),list(combinations([-i for i in vars],n+1))))
+```
+
 
 ## Footnotes and Bibliography
 
@@ -365,3 +399,4 @@ $$[[\alpha , \beta ],[\alpha , \gamma ],[\alpha , \delta ] , [\beta , \gamma ] ,
 [^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
 [^KMAPS]: https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
 [^Combinations]: https://docs.python.org/3/library/itertools.html#itertools.combinations
+[^lambda]: https://cs.stanford.edu/people/nick/py/python-map-lambda.html
