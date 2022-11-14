@@ -124,12 +124,12 @@ function Check(Position, Absent or Present)
   return true if guess is valid
  
 function Solve()
-  iterate through the lines in the grid marked as neither Absent or Present
+  iterate through the lines in the grid marked as neither Absent nor Present
   	for x in Present, Absent
 	  	if Check(Postion, Line x)
   			Mark Line on this grid as x
   			Solve()
-  			Mark Line on grid as neither Present of Absent
+  			Mark Line on grid as neither Present nor Absent
   	terminate this instance of the function
 ```
 
@@ -200,6 +200,16 @@ Now that I've explained the basics of what is needed to understand the code, I c
 ## Defining the Puzzle
 
 ```python
+with open('slitherlink.csv', 'r') as read_obj:
+    csv_reader = reader(read_obj)
+    squares = list(csv_reader)
+```
+
+We take the slitherlink grid as a .csv file where the numbers on the grid represent the numbers on the slitherlink grid and ''.' used to represent blank squares. This grid is then represented as a 2D grid in python: `squares`.
+
+The lines around the squares are represented as 
+
+```python
 rows=len(squares) #No. of Rows
 cols=len(squares[0]) #No. of Coloumns
 
@@ -207,11 +217,14 @@ def LineID(x,y,horizontal):
     return ((0<=x<=rows and 0<=y<cols) and ((x*cols)+y+1)) if horizontal else ((0<=x<rows and 0<=y<=cols) and cols*(rows+x+1)+x+y+1)
 ```
 
-`squares` is a grid that represents the positions of all the numbers written on the puzzle.
-
 We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1. Above we have used A and B to represent variables that give true or false, here we are using numbers. If 1 is true that means that the first horizontal line is drawn in the Slitherlink puzzle and so on.
 
+![GridCood](SlitherCood.png)
+![GridCood](SlitherCood.png)
+
 Generally, we can represent the horizontal line $$h_{x,y}$$ as $$(x \times (cols))+(y+1)$$, the last horizontal line at $h_{rows,cols-1}$ will be the $(rows+1) \times cols$ this is rather obvious, but can help us verify the formula. We can put in $x=rows$ and $y=cols-1$, we get $$(rows \times (cols))+(cols-1+1)=rows \times cols + cols = (rows+1) \times cols$$
+
+
 
 The vertical lines start from after the horizontal lines, therefore the first vertical line, $$v_{0,0}$$ is given the id $$(rows+1) \times cols + 1$$. Let's forget about the fact that the ids for vertical lines start after horizontal lines, and simply give the vertical lines ids with $$v_{0,0}$$ as 1,  $$v_{0,1}$$ as 2 and so on, uptil the last vertical line at $$v_{rows-1,cols}$$ which will get the value of $$rows \times (cols+1)$$. We can use a modification of the formula used for horizontal lines. $$v_{x,y}=x \times (cols+1) +y+1$$.
 
@@ -219,12 +232,9 @@ We can simply add the number of horizontal lines to this formula to give us a un
 
 $$ v_{x,y} = (rows+1) \times cols + x \times (cols + 1) + y + 1 = cols\times (rows + x + 1) + x + y + 1 $$
 
-
 As mentioned before, we can get the id of horizontal lines with
 
 $$ h_{x,y} = x \times cols + y + 1$$
-
-
 
 The `LineID()` function gives us the Line ID of a line if we're given its x and y coordinated 
 
@@ -237,6 +247,10 @@ There are 3 rules for Slitherlink as I've mentioned in the video above
 3. Loop never crosses itself
 
 We enfore Rules 2 and 3 in the CNF we give to the SAT solver and then iterate over all the given solutions to find one that follows Rule 1.
+
+
+
+
 
 ## Lines around a Cell/Another Line
 
