@@ -74,18 +74,10 @@ cnf=[]
 
 for i in list(range(rows+1)):
     for j in list(range(cols+1)):
-        if(i<rows and j<cols and squares[i][j]!='.'):
-            cnf=cnf+nTrue(aroundSquare(i,j),int(squares[i][j]))
-        if(j<cols):
-            for k in nTrue(linesAround(i,j,True,True),1):
-                cnf+=[k+[-LineID(i,j,True)]]
-            for k in nTrue(linesAround(i,j,True,False),1):
-                cnf+=[k+[-LineID(i,j,True)]]
-        if(i<rows):
-            for k in nTrue(linesAround(i,j,False,True),1):
-                cnf+=[k+[-LineID(i,j,False)]]
-            for k in nTrue(linesAround(i,j,False,False),1):
-                cnf+=[k+[-LineID(i,j,False)]]
+        cnf+=nTrue(aroundSquare(i,j),int(squares[i][j])) if (i<rows and j<cols and squares[i][j]!='.') else []
+        for hori in [True,False]:
+            for t in [True,False]:
+                cnf+=[k+[-lineId(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
 
 def IDtoCoord(num):
     if num>(rows+1)*cols:
@@ -249,7 +241,7 @@ The `LineID()` function gives us the Line ID of a line if we're given its x and 
 There are 3 rules for Slitherlink as I've mentioned in the video above
 
 1. Single Loop
-2. Numbers around a Cell
+2. Numbers in a Cell
 3. Loop never crosses itself
 
 We enfore Rules 2 and 3 in the CNF we give to the SAT solver and then iterate over all the given solutions to find one that follows Rule 1.
@@ -321,7 +313,7 @@ def nTrue(vars,n):
 This is just one line of code but it took me a lot of time and creativity to come up with this. Initially my plan was to make multiple functions for each of the cases I would have to deal with but that would be too cringe. 
 
 
-The Choose N function is a CNF representation that N and exactly N of the variables from the ones given need to be true. Making this function would have been easy if the constraint of CNF was not given. I sat down and wrote down various of these conditions and then manually converted them CNF form using Karnaugh-Maps[^KMAPS]. I thought this was to no avail, unsatisfied I decided to go sleep. Mid-sleep I came up with a better way to construct this function.
+The Choose N function is a CNF representation that N and exactly N of the variables from the ones given need to be true. Making this function would have been easy if the constraint of CNF was not given. I sat down and wrote down various of these conditions and then manually converted them CNF form using Karnaugh-Maps[^KMAPS]. I thought this was to no avail, unsatisfied I decided to go sleep. Mid-sleep I came up with a better way to construct this function. While implementing this algorithm, I came up with an even better one. The original algorithm[^other], I recommend not checking out what the other algorithm if you don't understand boolean algebra.
 
 For Exactly N variables to be true, we can say that at least N variables need to be true and at most N variables need to true.
 
@@ -378,7 +370,7 @@ If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at most 1 T
 
 $$(\neg \alpha \lor \neg \beta)\land (\neg \alpha \lor \neg \gamma)\land (\neg \alpha \lor \neg \delta) \land (\neg \beta \lor \neg \gamma) \land (\neg \beta \lor \neg \delta) \land (\neg \gamma \lor \neg \delta)$$
 
-From the 4 variables if we want at most 2 (at least 2 false) we can represent it as
+From the 4 variables if we want at most 2 True (at least 2 False) we can represent it as
 
 $$ (\neg \alpha \lor \neg \beta \lor \neg \gamma) \land (\neg \alpha \lor \neg \beta \lor \neg \delta) \land (\neg \alpha \lor \neg \gamma \lor \neg \delta) \land (\neg \beta \lor \neg \gamma \lor \neg \delta)$$
 
@@ -389,6 +381,56 @@ This is similar to the code explained previously, the only difference is that I 
 ```python
 list(map(lambda x:list(x),list(combinations([-i for i in vars],n+1))))
 ```
+## Implementing Rules 2 and 3
+
+```python
+cnf=[]
+
+for i in list(range(rows+1)):
+    for j in list(range(cols+1)):
+        cnf+=nTrue(aroundSquare(i,j),int(squares[i][j])) if (i<rows and j<cols and squares[i][j]!='.') else []
+        for hori in [True,False]:
+            for t in [True,False]:
+                cnf+=[k+[-lineId(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
+```
+
+`cnf` is the list to which will add all the clauses.
+
+#### Implementing Rule 2
+
+First we will enforce Rule 2: Numbers in a Cell. The number of lines around a square\cell is represented by the number inside the square\cell.
+
+We can enforce this by iterating through all the cell and enforcing the condition that only N of those lines must be true. We sill use the `nTrue` and `aroundSquare` functions to help us in doing so. `int(squares[i][j])` gives us the number inside the square
+
+```python
+for i in list(range(rows)):
+    for j in list(range(cols)):
+        cnf+=nTrue(aroundSquare(i,j),int(squares[i][j]))
+```
+
+#### Implemeting Rule 3
+
+Rule 3 states that the loop never crosses itself. This means that if we draw a line, we need to connect it exactly 2 lines, one on either point of the line. To understand how I have enforced Rule 3, you would have to understand 2 things in boolean algebra: *The Distributive Property* and *Implication*.
+
+Implication is relatively easy to understand since we use the word **implies** regularly. A implies B can be represented as
+
+$$A\implies B\equiv \neg A \lor B$$
+
+This means that is A is true then B must be true. It is possible that B is true and A is false.
+
+For example, let A be the statement that I'm Indian and B the statement that I'm South Asian. 
+
+Here A implies B. If I'm Indian I must be South Asian, but I could be South Asian without being Indian (Lets say if I were Pakistani).
+
+The second thing we need to understand is the Distributive Property. You probably already know about it because of arithmetic.
+
+$$x \times (y+z) = xy + xz$$
+
+This same law applies in Boolean Algebra as well
+
+$$\alpha \lor (\beta \land \gamma) \ equiv (\alpha \lor \beta) \land (\alpha \lor \gamma)$$
+
+Using these two we can enforce Rule 3. If a line is present, it implies that there are 2 points 
 
 
 ## Footnotes and Bibliography
@@ -397,6 +439,7 @@ list(map(lambda x:list(x),list(combinations([-i for i in vars],n+1))))
 [^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
 [^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf#page=34&zoom=100,158,576
 [^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
+[^other]: I could have first created the condition in Disjunctive Normal Form (let's call it f), applied De Morgans Law to f and from a contradiction containing all variables in Conjunctive Normal Form, I would remove all the elements that were common between it and the modified f. This would have been more ineffecient? 
 [^KMAPS]: https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
 [^Combinations]: https://docs.python.org/3/library/itertools.html#itertools.combinations
 [^lambda]: https://cs.stanford.edu/people/nick/py/python-map-lambda.html
