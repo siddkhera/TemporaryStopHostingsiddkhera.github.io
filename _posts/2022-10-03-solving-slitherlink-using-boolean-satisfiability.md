@@ -428,10 +428,19 @@ $$x \times (y+z) = xy + xz$$
 
 This same law applies in Boolean Algebra as well
 
-$$\alpha \lor (\beta \land \gamma) \ equiv (\alpha \lor \beta) \land (\alpha \lor \gamma)$$
+$$\alpha \lor (\beta \land \gamma) \equiv (\alpha \lor \beta) \land (\alpha \lor \gamma)$$
 
-Using these two we can enforce Rule 3. If a line is present, it implies that there are 2 points 
+Using these two we can enforce Rule 3. If a line is present it implies that there are 2 lines attached to it. One line is attached to the anterior (pre) point of the line and the other to the posterior point of the line.
 
+Let $$\alpha$$ be a line and $$(\zeta ,\theta ,\phi)$$ represend the lines connected to one of its points. At least of one $$(\zeta ,\theta ,\phi)$$ needs to be true represented in CNF, let this representation be $$\tau$$
+
+$$\alpha \implies \tau$ \equiv \neg \alpha \lor \tau$$
+
+$$\tau \equiv (\neg \zeta \lor \neg \theta) \land (\neg \zeta \lor \neg \phi) \land (\neg \theta \lor \neg \phi) \land (\zeta \lor \theta \lor \phi)$$
+
+Therefore the entire condition can be represented as 
+
+$$(\neg \alpha \lor \neg \zeta \lor \neg \theta) \land (\neg \alpha \lor \neg \zeta \lor \neg \phi) \land (\neg \alpha \lor \neg \theta \lor \neg \phi) \land (\neg \alpha \lor \zeta \lor \theta \lor \phi)$$
 
 ## Footnotes and Bibliography
 
