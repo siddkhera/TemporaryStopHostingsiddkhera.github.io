@@ -269,14 +269,14 @@ Since the `LineID()` function gives us False in the event that a line does not e
 
 There are 4 possibilities of lines around a line we need to find. The line can either be horizontal or vertical. Each line has two points, with different lines connected to each of them. `linesAround(x,y,horizontal,pre)` x and y represent the x and y coordinates; horizontal refers to whether or not the line is vertical or horizontal like the last function (True=Horizontal, False=Vertical); pre refers to the anterior point of the line (left point in horizontal lines and upper point in vertical lines).
 
-![Hori](LineALineH.png)
-![Verti](LineALineV.png)
+![Hori](LineALineH.jpg)
+![Verti](LineALineV.jpg)
 
 For each of the 4 possibilites, the lines around the point can be represented as 
 
 1. Let the line be a Horizontal Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its anterior(left) point. They can be represented as 
 
-$$ (\alpha ,\beta, Vertical),(\alpha -1,\beta, Vertical) and (\alpha, \beta -1, Horizontal)$$
+$$ (\alpha ,\beta, Vertical),(\alpha -1,\beta, Vertical)\ and\ (\alpha, \beta -1, Horizontal)$$
 
 
 
