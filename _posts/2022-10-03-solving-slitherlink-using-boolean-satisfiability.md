@@ -326,8 +326,8 @@ The Choose N function is a CNF representation that N and exactly N of the variab
 For Exactly N variables to be true, we can say that at least N variables need to be true and at most N variables need to true.
 
 
-$$n\leq x \leq n \Leftrightarrow x=n$$
-$$(AtMostN)\land (AtLeastN) \equiv (N True)$$
+$$n\leq x \leq n \Leftrightarrow x=n$$ or 
+$$(AtMostN)\land (AtLeastN) \equiv (N\ True)$$
 
 I used python's itertools library to help me out which is [beatuifully written and which I take inspiration from.](https://www.youtube.com/watch?v=jUM_Dpt6yu0)
 
@@ -347,6 +347,15 @@ $$ (\alpha \lor \beta \lor \gamma) \land (\alpha \lor \beta \lor \delta) \land (
 Similarily if we want at least 3 of those 4 variables to be true, we can write it as
 
 $$(\alpha \lor \beta)\land (\alpha \lor \gamma)\land (\alpha \lor \delta) \land (\beta \lor \gamma) \land (\beta \lor \delta) \land (\gamma \lor \delta)$$
+
+For the SAT Solver we are using, we have to represnt the CNF form in terms of items in a 2 degree nested list or a list with lists inside of it. The items in the list inside the list are in disjunction\OR (At least one of the variables inside have to me true) whereas the lists inside the primarity list are in conjunction\AND (All the lists have to be true).
+
+$$(\alpha \lor \beta)\land (\alpha \lor \gamma)\land (\alpha \lor \delta) \land (\beta \lor \gamma) \land (\beta \lor \delta) \land (\gamma \lor \delta)$$
+
+would be represented as 
+
+$$[[\alpha , \beta ],[\alpha , \gamma ],[\alpha , \delta ] , [\beta , \gamma ] , [\beta , \delta ] , [\gamma , \delta ]]$$
+
 
 ## Footnotes and Bibliography
 
