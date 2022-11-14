@@ -207,6 +207,12 @@ with open('slitherlink.csv', 'r') as read_obj:
 
 We take the slitherlink grid as a .csv file where the numbers on the grid represent the numbers on the slitherlink grid and ''.' used to represent blank squares. This grid is then represented as a 2D grid in python: `squares`.
 
+The squares are given coordinates as shown, they are the standard way 2D grids are represented in code with indexing starting from 0.
+
+$$Square\ Coordinater: Square_{x,y} \to (x,y) \in \{0,...,rows - 1 \} \times \{0,...,cols-1 \}$$
+
+We will asign a unique ID to every line, they will act as variables for the CNF. These IDs will be integers but should be not thought of as numbers, they're simply variables. Using integers is far more convenient. In the above example we have used $$A\ and\ B$$, here we would be using non zero positive integers.
+
 The lines around the squares are represented as showns below.
 
 ```python
@@ -217,13 +223,11 @@ def LineID(x,y,horizontal):
     return ((0<=x<=rows and 0<=y<cols) and ((x*cols)+y+1)) if horizontal else ((0<=x<rows and 0<=y<=cols) and cols*(rows+x+1)+x+y+1)
 ```
 
-We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1. Above we have used A and B to represent variables that give true or false, here we are using numbers. If 1 is true that means that the first horizontal line is drawn in the Slitherlink puzzle and so on.
+We are going to assign a unique non zero integer id to every line on the Slitherlink board. The numbers start with the horizontal lines, and go on to the vertical ones. We will define a function to convert a horizontal or vertical line with coordinates to it's unique id. We will use a simple coordinate system to keep track of the lines $$Horizontal\ Lines: h_{x,y} \to (x,y) \in \{0,...,rows \} \times \{0,...,cols-1 \}$$ and $$Vertical\ Lines: v_{x,y} \to (x,y) \in \{0,...,rows-1 \} \times \{0,...,cols \}$$ but will also assign them a unique positive integer to identify them. The number start from 1 since SAT solvers don't accept 0 as a variable, $$h_{0,0}$$ is represented as 1. Above we have used A and B to represent variables that give true or false, here we are using numbers. If 1 is true that means that the first horizontal line is drawn in the Slitherlink puzzle and so on.
 
 ![GridCood](SlitherID.jpeg)
 
 Generally, we can represent the horizontal line $$h_{x,y}$$ as $$(x \times (cols))+(y+1)$$, the last horizontal line at $h_{rows,cols-1}$ will be the $(rows+1) \times cols$ this is rather obvious, but can help us verify the formula. We can put in $x=rows$ and $y=cols-1$, we get $$(rows \times (cols))+(cols-1+1)=rows \times cols + cols = (rows+1) \times cols$$
-
-
 
 The vertical lines start from after the horizontal lines, therefore the first vertical line, $$v_{0,0}$$ is given the id $$(rows+1) \times cols + 1$$. Let's forget about the fact that the ids for vertical lines start after horizontal lines, and simply give the vertical lines ids with $$v_{0,0}$$ as 1,  $$v_{0,1}$$ as 2 and so on, uptil the last vertical line at $$v_{rows-1,cols}$$ which will get the value of $$rows \times (cols+1)$$. We can use a modification of the formula used for horizontal lines. $$v_{x,y}=x \times (cols+1) +y+1$$.
 
@@ -250,11 +254,11 @@ There are 3 rules for Slitherlink as I've mentioned in the video above
 
 We enfore Rules 2 and 3 in the CNF we give to the SAT solver and then iterate over all the given solutions to find one that follows Rule 1.
 
-
-
-
+These Rules have been explained in my video linked above.
 
 ## Lines around a Cell/Another Line
+
+#### Lines Around a Line
 
 ```python
 def linesAround(x,y,horizontal,pre):
@@ -289,6 +293,23 @@ $$ (\alpha ,\beta - 1 , Horizontal),(\alpha,\beta, Horizontal)\ and\ (\alpha - 1
 4. Let the line be a Vertical Lines with coordinates $$\alpha ,\beta$$ such that we need to find the points attached to its posterior (right) point. They can be represented as 
 
 $$ (\alpha + 1,\beta - 1, Horizontal),(\alpha + 1,\beta, Horizontal)\ and\ (\alpha + 1, \beta, Vertical)$$
+
+#### Lines Around a Square
+
+This function is relatively simple compared to the last funcion, given a square we have to find all the lines around that square.
+
+
+
+```python
+def aroundSquare(x,y):
+    return [LineID(x,y,True),LineID(x,y,False),LineID(x+1,y,True),LineID(x,y+1,False)]
+```
+
+All squares have 4 lines surrounding it. Two horizontal lines and two vertical lines.
+
+For the square with coordinate $$\alpha ,\beta$$, we can represend the lines around it as
+
+$$ (\alpha, \beta, Horizontal), (\alpha, \beta, Vertical), (\alpha + 1, \beta, Horizontal)\ and\ (\alpha, \beta + 1, Vertical)$$
 
 ## Footnotes and Bibliography
 
