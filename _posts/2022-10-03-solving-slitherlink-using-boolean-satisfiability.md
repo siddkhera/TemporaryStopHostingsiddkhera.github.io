@@ -77,26 +77,20 @@ for i in list(range(rows+1)):
         cnf+=nTrue(aroundSquare(i,j),int(squares[i][j])) if (i<rows and j<cols and squares[i][j]!='.') else []
         for hori in [True,False]:
             for t in [True,False]:
-                cnf+=[k+[-lineId(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
+                cnf+=[k+[-LineID(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
 
-def IDtoCoord(num):
-    if num>(rows+1)*cols:
-        num-=1+(rows+1)*cols
-        return linesAround(num//(cols+1),num%(cols+1),False,True)+linesAround(num//(cols+1),num%(cols+1),False,False)
-    else:
-        num-=1
-        return linesAround(num//(cols),num%(cols),True,True)+linesAround(num//(cols),num%(cols),True,False)
+def IdLinesAround(num):
+        return linesAround((num-((rows+1)*cols+1))//(cols+1),(num-((rows+1)*cols+1))%(cols+1),False,True)+linesAround((num-((rows+1)*cols+1))//(cols+1),(num-((rows+1)*cols+1))%(cols+1),False,False) if num>(rows+1)*cols else linesAround((num-1)//(cols),(num-1)%(cols),True,True)+linesAround((num-1)//(cols),(num-1)%(cols),True,False)
 
-def ExtraLoops(TrueLines,LinesNotTravelled):
+def OneLoop(TrueLines,LinesNotTravelled):
     while(LinesNotTravelled!=[]):
         TrueLines.remove(LinesNotTravelled[0])
-        LinesNotTravelled=[i for i in IDtoCoord(LinesNotTravelled[0]) if (i in TrueLines)]
-    return TrueLines
+        LinesNotTravelled=[i for i in IdLinesAround(LinesNotTravelled[0]) if (i in TrueLines)]
+    return (TrueLines==[])
 
 for sol in pycosat.itersolve(cnf):
     TrueLines=[i for i in sol if i>0]
-    LoopsRemaining=ExtraLoops(TrueLines,[TrueLines[0]])
-    if LoopsRemaining==[]:
+    if OneLoop(TrueLines,[TrueLines[0]]):
         print(sol)
 ```
 
@@ -104,9 +98,9 @@ for sol in pycosat.itersolve(cnf):
 
 Many people have created solvers for the (more) popular Japanese Puzzle - Sudoku. Almost all of these solvers use a method known as backtracking, like the one on this [video](https://www.youtube.com/watch?v=G_UYXzGuqvM). If I had used a similar backtracking uproach on Slitherlink, the puzzles would have taken extremely long. (Technically I still used it but through the DPLL algorithm that was implemented in the SAT Solver)
 
-To put it simply, backtracking is simply making guesses and going back and changing the guess if it doesn't work. 
+To put it simply, backtracking is simply making guesses and going back and changing the guess if it doesn't work. This is relatively easier to implement but horribly ineffecient.
 
-We iterate through all the possible guesses until we find one that works.
+We iterate through all the possible guesses until we find one that works. This has been advocated for in this assignment from RPI[^assignment].
 
 ```
 Initialise grid with all lines neither present not absent
@@ -299,7 +293,7 @@ def aroundSquare(x,y):
 
 All squares have 4 lines surrounding it. Two horizontal lines and two vertical lines.
 
-For the square with coordinate $$\alpha ,\beta$$, we can represend the lines around it as
+For the square with coordinate $$\alpha ,\beta$$, we can represent the lines around it as
 
 $$ (\alpha, \beta, Horizontal), (\alpha, \beta, Vertical), (\alpha + 1, \beta, Horizontal)\ and\ (\alpha, \beta + 1, Vertical)$$
 
@@ -328,7 +322,7 @@ I believe every novice python programmer needs to know about python's [itertools
 #### At Least N
 Let the number of variables here be len, and N the number of variables we want to be true. $$len-n$$ is the number of variables that are therefore false. So if we choose one more than $$len-n$$ variables, at least one has to be true no matter what. Therefore if we add all the ways of choosing any $$len-n+1$$ from the variables represented in the CNF form, the expression will be True if at least N variables are True.
 
-If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at least 1 true. We can represend it as
+If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at least 1 true. We can represent it as
 
 $$(\alpha \lor \beta \lor \gamma \lor \delta)$$
 
@@ -366,7 +360,7 @@ In some sense, at most N is the same as a at least N. If have figured out how to
 
 How? Well, if *at most* N variables are True then *at least* `len-N` must be false. Applying what we did before. Therefore if we choose one more than $$len-(len-n)=n$$ or $$n+1$$ variables, at least one of them must be false. To check that at leasy one of them false, we can apply negation (NOT) to the variables $$\neg \alpha$$ is True when $$\alpha$$ is False and False when $$\alpha$$ is true. We can find all the ways to choose n+1 variables and negate them so that the expression is True if at least $$len-N$$ variables are False or if at most N variables are True.
 
-If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at most 1 True (at least 3 False). We can represend it as
+If we have variables $$(\alpha ,\beta ,\gamma ,\delta)$$ and we want at most 1 True (at least 3 False). We can represent it as
 
 $$(\neg \alpha \lor \neg \beta)\land (\neg \alpha \lor \neg \gamma)\land (\neg \alpha \lor \neg \delta) \land (\neg \beta \lor \neg \gamma) \land (\neg \beta \lor \neg \delta) \land (\neg \gamma \lor \neg \delta)$$
 
@@ -391,7 +385,7 @@ for i in list(range(rows+1)):
         cnf+=nTrue(aroundSquare(i,j),int(squares[i][j])) if (i<rows and j<cols and squares[i][j]!='.') else []
         for hori in [True,False]:
             for t in [True,False]:
-                cnf+=[k+[-lineId(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
+                cnf+=[k+[-LineID(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)] if ((not hori or j<cols) and (hori or i<rows)) else []
 ```
 
 `cnf` is the list to which will add all the clauses.
@@ -432,7 +426,7 @@ $$\alpha \lor (\beta \land \gamma) \equiv (\alpha \lor \beta) \land (\alpha \lor
 
 Using these two we can enforce Rule 3. If a line is present it implies that there are 2 lines attached to it. One line is attached to the anterior (pre) point of the line and the other to the posterior point of the line.
 
-Let $$\alpha$$ be a line and $$(\zeta ,\theta ,\phi)$$ represend the lines connected to one of its points. At least of one $$(\zeta ,\theta ,\phi)$$ needs to be true represented in CNF, let this representation be $$\tau$$
+Let $$\alpha$$ be a line and $$(\zeta ,\theta ,\phi)$$ represent the lines connected to one of its points. At least of one $$(\zeta ,\theta ,\phi)$$ needs to be true represented in CNF, let this representation be $$\tau$$
 
 $$\alpha \implies \tau \equiv \neg \alpha \lor \tau$$
 
@@ -442,13 +436,43 @@ Therefore the entire condition can be represented as
 
 $$(\neg \alpha \lor \neg \zeta \lor \neg \theta) \land (\neg \alpha \lor \neg \zeta \lor \neg \phi) \land (\neg \alpha \lor \neg \theta \lor \neg \phi) \land (\neg \alpha \lor \zeta \lor \theta \lor \phi)$$
 
+We need to apply this to each and every line both horizontal and vertical and to both lines connected to the anterior and posterior points for all these lines. Since we are already iterating through all the squares, we can iterate through all the lines alongside it. The problem is that the x coordinate of horizontal lines and y coordinate of vertical lines is one more than the number of rows and coloumns and this would cause 0 to be added to the CNF. To fix this we can simply add an if statement to iterate over the line only if it is valid.
+
+```python
+if ((not hori or j<cols) and (hori or i<rows))
+    cnf+=[k+[-LineID(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)]
+```
+
+## How to Enforce Rule 1
+
+Rule 1 states that there must be only 1 loop. If the puzzle is extremely large, it's likely that multiple loops will be formed to satisfy the solution. Since we are allowed to have only one loop, after finding the solution without this condition satisfied, we will iterate through all the solutions to find valid ones. For this I created two functions, one that gives the lines around a line given it's ID. The other checks if there are any extra loops.
+
+## Lines Around using ID
+
+```python
+def IdLinesAround(num):
+        return linesAround((num-((rows+1)*cols+1))//(cols+1),(num-((rows+1)*cols+1))%(cols+1),False,True)+linesAround((num-((rows+1)*cols+1))//(cols+1),(num-((rows+1)*cols+1))%(cols+1),False,False) if num>(rows+1)*cols else linesAround((num-1)//(cols),(num-1)%(cols),True,True)+linesAround((num-1)//(cols),(num-1)%(cols),True,False)
+```
+
+We already have the ID of the line, so it would be easier and maybe more concise to just print the lines using the fomulas above instead of converting the line back to their coordinates and then calling the previously written functions. Unfortuntely I didn't feel like doing it and am now too lazy to change the code. Given a line's ID, I convert it into it's coordinates. ID's start from 1 whereas the coordinates start from 1 so I subtract -1 from both. For Vertical Lines I subtract the no. of horizontal lines as well. If the ID is greater than number of horizontal lines then it is a vertical line.
+
+`a//b` gives a divided by b but without the remainder where `a%b` gives only the remainder. Using this I can find the Coordinates of these lines and return the lines around them.
+
+## Removing Loops
+
+```python
+
+```
+
+
 ## Footnotes and Bibliography
 
 [^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
 [^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
-[^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf#page=34&zoom=100,158,576
+[^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf
 [^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
 [^other]: I could have first created the condition in Disjunctive Normal Form (let's call it f), applied De Morgans Law to f and from a contradiction containing all variables in Conjunctive Normal Form, I would remove all the elements that were common between it and the modified f. This would have been more ineffecient? 
 [^KMAPS]: https://www.geeksforgeeks.org/introduction-of-k-map-karnaugh-map/
 [^Combinations]: https://docs.python.org/3/library/itertools.html#itertools.combinations
 [^lambda]: https://cs.stanford.edu/people/nick/py/python-map-lambda.html
+[^assignment]: https://www.cs.rpi.edu/academics/courses/fall18/csci1200/hw/06_inverse_slitherlink/hw.pdf
