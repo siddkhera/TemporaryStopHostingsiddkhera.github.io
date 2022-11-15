@@ -8,6 +8,8 @@ math: true
 pin: true
 ---
 
+The entire code has been written in just 45 lines.
+
 ## What is Slitherlink?
 
 Slitherlink is a Japanese Puzzle Game I love. I'd made a video explaining it a year ago, you can check it out if you don't know about the game. (I apologise for my voice in advance, I was half asleep)
