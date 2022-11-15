@@ -2,7 +2,7 @@
 title: Satisfiability Course Meme
 date: 2022-09-28 00:00:00 +0530
 categories: [Youtube, Puzzles]
-tags: [slitherlink, puzzles, youtube]
+tags: [Slitherlink, Puzzles, YOUTUBE, Coursera]
 
 ---
 
