@@ -6,6 +6,7 @@ tags: [boolean satisfiability, propositional logic, SMT/SAT Solvers, slitherlink
 toc: true
 math: true
 pin: true
+comments: true
 ---
 
 The entire code has been written in just 45 lines.
