@@ -443,10 +443,6 @@ if ((not hori or j<cols) and (hori or i<rows))
     cnf+=[k+[-LineID(i,j,hori)] for k in nTrue(linesAround(i,j,hori,t),1)]
 ```
 
-## How to Enforce Rule 1
-
-Rule 1 states that there must be only 1 loop. If the puzzle is extremely large, it's likely that multiple loops will be formed to satisfy the solution. Since we are allowed to have only one loop, after finding the solution without this condition satisfied, we will iterate through all the solutions to find valid ones. For this I created two functions, one that gives the lines around a line given it's ID. The other checks if there are any extra loops.
-
 ## Lines Around using ID
 
 ```python
@@ -458,12 +454,30 @@ We already have the ID of the line, so it would be easier and maybe more concise
 
 `a//b` gives a divided by b but without the remainder where `a%b` gives only the remainder. Using this I can find the Coordinates of these lines and return the lines around them.
 
-## Removing Loops
+## Rule 1: One Loop Condition
 
 ```python
-
+def OneLoop(TrueLines,LinesNotTravelled):
+    while(LinesNotTravelled!=[]):
+        TrueLines.remove(LinesNotTravelled[0])
+        LinesNotTravelled=[i for i in IdLinesAround(LinesNotTravelled[0]) if (i in TrueLines)]
+    return (TrueLines==[])
 ```
 
+In this function, we visit all the lines in a loop and check if there are still other lines left. If we have visited all lines then we return True.
+
+`TrueLines` is a list of all the lines in the puzzle that the solver has given as present. `LinesNotTravelled` is initially the first line from `TrueLines`. We remove the first line in `LinesNotTravelled` from `TrueLines` and find all the lines connected to this line. Then we set `LinesNotTravelled` equal to the lines around the lines we just chose which is also in `TrueLines`. If there was no line in common then we must have come back to our orignal position and visited all the lines in the loop. As we were doing so, we were removing the lines from `TrueLines`. For the one loop condition to be valid, it must follow that `TrueLines` is empty.
+
+## Solving
+
+```python
+for sol in pycosat.itersolve(cnf):
+    TrueLines=[i for i in sol if i>0]
+    if OneLoop(TrueLines,[TrueLines[0]]):
+        print(sol)
+```
+
+We simply iterate over all the solutions that the SAT solver has given and print the correct one/ones.
 
 ## Footnotes and Bibliography
 
