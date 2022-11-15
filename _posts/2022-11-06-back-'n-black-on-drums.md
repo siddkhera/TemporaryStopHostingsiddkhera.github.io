@@ -2,7 +2,7 @@
 title: Back 'n Black on Drums
 date: 2021-11-06 00:00:00 +0530
 categories: [Youtube, Drums]
-tags: [slitherlink, puzzles, youtube]
+tags: [Slitherlink, Puzzles, YOUTUBE]
 
 ---
 
