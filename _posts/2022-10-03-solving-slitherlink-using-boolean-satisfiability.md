@@ -9,7 +9,9 @@ pin: true
 comments: true
 ---
 
-The entire code has been written in just 45 lines.
+The entire code has been written in just 34 lines(after removing the unnecesarry '\n's).
+
+I apologise for any and all spelling or grammatical mistakes I have made. Please feel free to report them to me on mail.
 
 ## What is Slitherlink?
 
