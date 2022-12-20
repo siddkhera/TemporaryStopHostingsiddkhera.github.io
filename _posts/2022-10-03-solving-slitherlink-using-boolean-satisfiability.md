@@ -19,32 +19,6 @@ Slitherlink is a Japanese Puzzle Game I love. I'd made a video explaining it a y
 
 <iframe src="https://www.youtube.com/embed/EMuvNXjdWEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Why this Project Means so Much to me
-
-> Feel Free to skip this
->
-> {: .prompt-info}
-
-A few years ago I had bought a book[^Puzzle Ninja] filled with Japanese Puzzles. The first Puzzle introduced in the book and arguably my favourite - alongside KenKen - was Slitherlink.
-
-Coming to September of 2021, while Solving Slitherlink Puzzles, I had the urge to make a solver for it. When I asked [Jinen](https://jinensetpal.github.io/) for help with it.
-
-![JinenSS](JinenSS.png)
-
-This project took a long time to complete and while others exaggerate the hours activities took on their CommonApp, I may have understated this one out of sheer embarassment at how long it took. Arguably I didn't spend much time on it at a go since something or the other always came up. Most of the time spent on this project was spent going on tangents as I learned new things while coming up with a way to approach this project. It would take too long to list what all I learned through this project so I shall skip it for now. 
-
-In March of 2022, one night I suddenly got the motivaiton to complete the project and managed to do most of it until a horrible bug stopped me. I spent **hours** trying to fix this bug, even had a 2 hours long zoom session with Jinen to help me find the bug, but our efforts were futile.
-
-Finally in June of 2022 after my internships ended and I got COVID, I decided to start this project again... from scratch. In doing so, I found the bug, the most ridiculous thing possible: a simple algebra mistake while writing the algorithm.
-
-Unfortunately, since school had restarted and COVID had trained all my energy I sat down to complete the project again finished it in July.
-
-![JinenSS](JinenS2.png)
-
-This project took wayyy longer than it should have but the lessons learned and the skills acquired make it worth it. Working on my own, this project taught me how to teach myself new concepts and how to apply them.
-
-I would like to thank Jinen for motivating me to complete this project and would like to formally apologise for that 2 hour debugging session that was to no avail. I would also express my gratitude to Alka Ma'am, my Computers Teacher who taught me Propositonal Logic, without which even the thought of learnig about SAT Solvers would have scared me.
-
 ## El Código
 
 Before I start explaining my project, here is the code. It's also on my [GitHub](https://github.com/siddkhera) !
@@ -486,7 +460,7 @@ We simply iterate over all the solutions that the SAT solver has given and print
 
 ## Footnotes and Bibliography
 
-[^Puzzle Ninja]: [Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/)
+[^Puzzle Ninja]: Puzzle Ninja By Alex Bellos](https://www.amazon.com/Puzzle-Ninja-Against-Japanese-Masters/dp/145217105X/
 [^PROOF]: https://www.jstage.jst.go.jp/article/ipsjjip/20/3/20_709/_article/-char/en
 [^paper1]: https://david-westreicher.github.io/static/papers/ba-thesis.pdf
 [^paper2]: https://www.cs.ru.nl/bachelors-theses/2021/Gerhard_van_der_Knijff___1006946___Solving_and_generating_puzzles_with_a_connectivity_constraint.pdf
